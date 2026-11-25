@@ -7,6 +7,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Leaflet CSS (Free, no API key) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            z-index: 1;
+        }
+        .outlet-card.active {
+            border-color: var(--brand-color);
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.1);
+        }
+    </style>
 </head>
 <body>
 
@@ -25,51 +42,158 @@
 
     <div class="container">
         <h1 class="page-title">Find a VibeTix Outlet</h1>
-        <p class="page-subtitle">Find a VibeTix outlet near you to purchase tickets in person.</p>
+        <p class="page-subtitle">Click a pin on the map or a store in the list to see details.</p>
 
         <div class="outlet-search-box">
-            <input type="text" placeholder="Search by outlet name, address or city...">
-            <select>
-                <option>All Provinces</option>
-                <option>Gauteng</option>
-                <option>Western Cape</option>
-                <option>KwaZulu-Natal</option>
+            <input type="text" id="outletSearch" placeholder="Search by outlet name...">
+            <select id="provinceSelect">
+                <option value="all">All Provinces</option>
+                <option value="Gauteng">Gauteng</option>
+                <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+                <option value="Western Cape">Western Cape</option>
             </select>
-            <button style="padding: 12px 24px; background: var(--nav-blue); color: white; border: none; border-radius: 6px; cursor: pointer;"><i class="fas fa-search"></i></button>
+            <button onclick="filterOutlets()" style="padding: 12px 24px; background: var(--nav-blue); color: white; border: none; border-radius: 6px; cursor: pointer;"><i class="fas fa-search"></i></button>
         </div>
 
         <div class="outlet-layout">
-            <div class="map-container">
-                <div class="map-overlay">Map View</div>
-                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000" alt="Map Placeholder">
-            </div>
+            <!-- Free Interactive Map Container -->
+            <div id="map"></div>
 
-            <div class="outlet-list">
-                <div class="outlet-card">
-                    <h4>14 TUCK SHOP</h4>
-                    <span class="outlet-type">Retail Store</span>
-                    <p><i class="fas fa-map-marker-alt"></i> Unknown Address, SHOP, KwaZulu-Natal</p>
-                    <p><i class="fas fa-phone"></i> 0</p>
-                    <a href="#">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
-                </div>
-
-                <div class="outlet-card">
-                    <h4>1692268 KENSINGTON ELECTRICAL WH</h4>
-                    <span class="outlet-type">Retail Store</span>
-                    <p><i class="fas fa-map-marker-alt"></i> Unknown Address, WH, Gauteng</p>
-                    <p><i class="fas fa-phone"></i> 0116148556</p>
-                    <a href="#">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
-                </div>
-
-                <div class="outlet-card">
-                    <h4>2ND AVENUE SPAR Kiosk</h4>
-                    <span class="outlet-type">Retail Store</span>
-                    <p><i class="fas fa-map-marker-alt"></i> 2nd Avenue, Pretoria, Gauteng</p>
-                    <p><i class="fas fa-phone"></i> 0123456789</p>
-                    <a href="#">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
-                </div>
+            <!-- List Side -->
+            <div class="outlet-list" id="outletList">
+                <!-- Outlets will be injected here via JS -->
             </div>
         </div>
     </div>
+
+    <!-- Leaflet JavaScript (Free, no API key) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // --- OUTLET DATABASE (With Real Coordinates) ---
+        const outlets = [
+            { 
+                name: "14 TUCK SHOP", 
+                type: "Retail Store", 
+                address: "SHOP, KwaZulu-Natal", 
+                province: "KwaZulu-Natal", 
+                phone: "0",
+                lat: -29.8587, lng: 31.0218
+            },
+            { 
+                name: "1692268 KENSINGTON ELECTRICAL WH", 
+                type: "Retail Store", 
+                address: "WH, Gauteng", 
+                province: "Gauteng", 
+                phone: "0116148556",
+                lat: -26.2041, lng: 28.0473
+            },
+            { 
+                name: "2ND AVENUE SPAR Kiosk", 
+                type: "Supermarket", 
+                address: "2nd Avenue, Pretoria, Gauteng", 
+                province: "Gauteng", 
+                phone: "0123456789",
+                lat: -25.7479, lng: 28.2293
+            },
+            { 
+                name: "CAPE TOWN CBD TICKET HUB", 
+                type: "Retail Store", 
+                address: "Long Street, Cape Town, Western Cape", 
+                province: "Western Cape", 
+                phone: "0219876543",
+                lat: -33.9249, lng: 18.4241
+            }
+        ];
+
+        let map;
+        let markers = [];
+
+        // --- INITIALIZE MAP ---
+        function initMap() {
+            // Center on South Africa
+            map = L.map('map').setView([-30.5595, 22.9375], 5);
+
+            // Add free OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Add markers for all outlets
+            outlets.forEach((outlet, index) => {
+                const marker = L.marker([outlet.lat, outlet.lng]).addTo(map);
+                
+                // Add popup with store info
+                marker.bindPopup(`
+                    <div style="font-family: 'Inter', sans-serif; padding: 5px;">
+                        <h3 style="margin: 0 0 5px 0; font-size: 16px;">${outlet.name}</h3>
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: #64748b;">${outlet.address}</p>
+                        <p style="margin: 0; font-size: 12px; color: #64748b;"><i class="fas fa-phone"></i> ${outlet.phone}</p>
+                    </div>
+                `);
+
+                markers.push({ marker, index });
+            });
+
+            renderOutlets();
+        }
+
+        // --- RENDER OUTLETS LIST ---
+        function renderOutlets(filteredOutlets = outlets) {
+            const list = document.getElementById('outletList');
+            list.innerHTML = '';
+
+            if (filteredOutlets.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:#64748b; margin-top:20px;">No outlets found.</p>';
+                return;
+            }
+
+            filteredOutlets.forEach((outlet, index) => {
+                const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(outlet.name + ' ' + outlet.address)}`;
+                const originalIndex = outlets.findIndex(o => o.name === outlet.name);
+
+                const card = document.createElement('div');
+                card.className = 'outlet-card';
+                card.innerHTML = `
+                    <h4>${outlet.name}</h4>
+                    <span class="outlet-type">${outlet.type}</span>
+                    <p><i class="fas fa-map-marker-alt"></i> ${outlet.address}</p>
+                    <p><i class="fas fa-phone"></i> ${outlet.phone}</p>
+                    <a href="${mapsLink}" target="_blank">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
+                `;
+
+                // Add click event to zoom to marker
+                card.addEventListener('click', () => {
+                    const markerObj = markers.find(m => m.index === originalIndex);
+                    if (markerObj) {
+                        map.setView([outlet.lat, outlet.lng], 12);
+                        markerObj.marker.openPopup();
+                    }
+                });
+
+                list.appendChild(card);
+            });
+        }
+
+        // --- FILTER FUNCTION ---
+        function filterOutlets() {
+            const searchTerm = document.getElementById('outletSearch').value.toLowerCase();
+            const province = document.getElementById('provinceSelect').value;
+
+            const filtered = outlets.filter(outlet => {
+                const matchesSearch = outlet.name.toLowerCase().includes(searchTerm);
+                const matchesProvince = province === 'all' || outlet.province === province;
+                return matchesSearch && matchesProvince;
+            });
+
+            renderOutlets(filtered);
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap();
+        });
+    </script>
 </body>
 </html>
