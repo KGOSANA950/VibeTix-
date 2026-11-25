@@ -13,6 +13,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Link to your shared CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +23,7 @@
         <div class="logo"><a href="index.html">Vibe<span>Tix</span></a></div>
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search events, artists, venues...">
+            <input type="text" id="searchInput" placeholder="Search events, artists, venues...">
         </div>
         <div class="nav-links">
             <!-- EVENTS MEGA MENU -->
@@ -30,11 +31,9 @@
                 Events <i class="fas fa-chevron-down"></i>
                 <div class="dropdown-menu">
                     <div class="dropdown-header">Browse Events</div>
-                    <a href="#">All Events</a>
-                    <a href="#">Featured Events</a>
-                    <a href="#">This Weekend</a>
-                    <a href="#">Music Events</a>
-                    <a href="#">Lifestyle Events</a>
+                    <a href="#featured-events">All Events</a>
+                    <a href="#featured-events">Featured Events</a>
+                    <a href="#music-events">Music Events</a>
                 </div>
             </div>
             
@@ -43,16 +42,10 @@
                 Categories <i class="fas fa-chevron-down"></i>
                 <div class="dropdown-menu">
                     <div class="dropdown-header">Event Categories</div>
-                    <a href="#">Music</a>
-                    <a href="#">Lifestyle</a>
-                    <a href="#">Other Sport</a>
-                    <a href="#">Soccer</a>
-                    <a href="#">Comedy</a>
-                    <a href="#">Rugby</a>
-                    <a href="#">Cricket</a>
-                    <a href="#">Hospitality</a>
-                    <a href="#">Park and Ride</a>
-                    <a href="#">Theatre</a>
+                    <a href="#featured-events">Music</a>
+                    <a href="#featured-events">Lifestyle</a>
+                    <a href="#featured-events">Sport</a>
+                    <a href="#featured-events">Comedy</a>
                 </div>
             </div>
             
@@ -68,7 +61,7 @@
     </div>
 
     <!-- FEATURED EVENTS SECTION -->
-    <div class="section-header" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
+    <div class="section-header" id="featured-events" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
         <h2 style="font-size: 1.5rem; font-weight: 800;">Featured Events</h2>
         <a href="#" style="color: var(--brand-color); font-weight: 600; font-size: 0.9rem;">View All</a>
     </div>
@@ -78,7 +71,7 @@
     </main>
 
     <!-- MUSIC EVENTS SECTION -->
-    <div class="section-header" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
+    <div class="section-header" id="music-events" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
         <h2 style="font-size: 1.5rem; font-weight: 800;">Music Events</h2>
         <a href="#" style="color: var(--brand-color); font-weight: 600; font-size: 0.9rem;">View All</a>
     </div>
@@ -97,7 +90,7 @@
             { id: 4, title: "Winky D: Tete-A-Tete (Johannesburg)", category: "featured", location: "Ellis Park Arena, Johannesburg", date: "November 28, 2026 - 6:00 PM", price: "From R300", img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600" },
             { id: 5, title: "Sunbet Beach Party with Scorpion Kings", category: "featured", location: "Sun City Resort - Valley of the Waves", date: "December 04, 2026", price: "From R1000", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=600" },
 
-            // Music Events
+            // Music Events (Fixed the broken image link for Faithful)
             { id: 6, title: "Faithful With Bucie - The Concert (DBN)", category: "music", location: "Olive Convention Centre, Durban", date: "December 16, 2026 - 7:00 PM", price: "From R550", img: "https://images.unsplash.com/photo-1493225457124-a1a2a5f5b8b2?auto=format&fit=crop&q=80&w=600" },
             { id: 7, title: "Ikhaya Labasha", category: "music", location: "Maphephetheni Inanda Dam", date: "November 29, 2026 - 12:00 PM", price: "From R150", img: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=600" },
             { id: 8, title: "Nedbank Golf Challenge", category: "music", location: "Sun City Resort", date: "December 01, 2026", price: "From R250", img: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=600" },
@@ -106,15 +99,16 @@
         ];
 
         // --- RENDER FUNCTION ---
-        function renderGrid(category, containerId) {
-            const grid = document.getElementById(containerId);
-            grid.innerHTML = '';
+        function renderGrid(eventsToRender) {
+            const featuredGrid = document.getElementById('featuredGrid');
+            const musicGrid = document.getElementById('musicGrid');
+            
+            // Clear grids
+            featuredGrid.innerHTML = '';
+            musicGrid.innerHTML = '';
 
-            const filtered = events.filter(e => e.category === category);
-
-            filtered.forEach(event => {
+            eventsToRender.forEach(event => {
                 const card = document.createElement('div');
-                // Styling is inline here to ensure it works with the new style.css
                 card.style.cssText = "background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; transition: transform 0.3s; cursor: pointer; display: flex; flex-direction: column;";
                 card.innerHTML = `
                     <div style="position: relative; height: 180px;">
@@ -129,14 +123,36 @@
                         <div style="margin-top: auto; padding-top: 15px; font-weight: 700; color: #1e3a8a; font-size: 1rem;">${event.price}</div>
                     </div>
                 `;
-                grid.appendChild(card);
+                
+                // Append to correct grid based on category
+                if (event.category === 'featured') {
+                    featuredGrid.appendChild(card);
+                } else {
+                    musicGrid.appendChild(card);
+                }
             });
         }
 
+        // --- SEARCH FUNCTIONALITY ---
+        const searchInput = document.getElementById('searchInput');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            // Filter the events array based on the search term
+            const filteredEvents = events.filter(event => 
+                event.title.toLowerCase().includes(searchTerm) || 
+                event.location.toLowerCase().includes(searchTerm) ||
+                event.category.toLowerCase().includes(searchTerm)
+            );
+            
+            // Re-render the grid with the filtered results
+            renderGrid(filteredEvents);
+        });
+
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
-            renderGrid('featured', 'featuredGrid');
-            renderGrid('music', 'musicGrid');
+            renderGrid(events); // Render all events on load
         });
     </script>
 </body>
