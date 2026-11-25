@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     
-    <!-- Leaflet CSS (Free, no API key) -->
+    <!-- Leaflet CSS (FREE - No API Key Required) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
@@ -66,44 +66,16 @@
         </div>
     </div>
 
-    <!-- Leaflet JavaScript (Free, no API key) -->
+    <!-- Leaflet JavaScript (FREE) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // --- OUTLET DATABASE (With Real Coordinates) ---
+        // --- OUTLET DATABASE ---
         const outlets = [
-            { 
-                name: "14 TUCK SHOP", 
-                type: "Retail Store", 
-                address: "SHOP, KwaZulu-Natal", 
-                province: "KwaZulu-Natal", 
-                phone: "0",
-                lat: -29.8587, lng: 31.0218
-            },
-            { 
-                name: "1692268 KENSINGTON ELECTRICAL WH", 
-                type: "Retail Store", 
-                address: "WH, Gauteng", 
-                province: "Gauteng", 
-                phone: "0116148556",
-                lat: -26.2041, lng: 28.0473
-            },
-            { 
-                name: "2ND AVENUE SPAR Kiosk", 
-                type: "Supermarket", 
-                address: "2nd Avenue, Pretoria, Gauteng", 
-                province: "Gauteng", 
-                phone: "0123456789",
-                lat: -25.7479, lng: 28.2293
-            },
-            { 
-                name: "CAPE TOWN CBD TICKET HUB", 
-                type: "Retail Store", 
-                address: "Long Street, Cape Town, Western Cape", 
-                province: "Western Cape", 
-                phone: "0219876543",
-                lat: -33.9249, lng: 18.4241
-            }
+            { name: "14 TUCK SHOP", type: "Retail Store", address: "SHOP, KwaZulu-Natal", province: "KwaZulu-Natal", phone: "0", lat: -29.8587, lng: 31.0218 },
+            { name: "1692268 KENSINGTON ELECTRICAL WH", type: "Retail Store", address: "WH, Gauteng", province: "Gauteng", phone: "0116148556", lat: -26.2041, lng: 28.0473 },
+            { name: "2ND AVENUE SPAR Kiosk", type: "Supermarket", address: "2nd Avenue, Pretoria, Gauteng", province: "Gauteng", phone: "0123456789", lat: -25.7479, lng: 28.2293 },
+            { name: "CAPE TOWN CBD TICKET HUB", type: "Retail Store", address: "Long Street, Cape Town, Western Cape", province: "Western Cape", phone: "0219876543", lat: -33.9249, lng: 18.4241 }
         ];
 
         let map;
@@ -111,20 +83,15 @@
 
         // --- INITIALIZE MAP ---
         function initMap() {
-            // Center on South Africa
             map = L.map('map').setView([-30.5595, 22.9375], 5);
 
-            // Add free OpenStreetMap tiles
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 maxZoom: 19
             }).addTo(map);
 
-            // Add markers for all outlets
             outlets.forEach((outlet, index) => {
                 const marker = L.marker([outlet.lat, outlet.lng]).addTo(map);
-                
-                // Add popup with store info
                 marker.bindPopup(`
                     <div style="font-family: 'Inter', sans-serif; padding: 5px;">
                         <h3 style="margin: 0 0 5px 0; font-size: 16px;">${outlet.name}</h3>
@@ -132,7 +99,6 @@
                         <p style="margin: 0; font-size: 12px; color: #64748b;"><i class="fas fa-phone"></i> ${outlet.phone}</p>
                     </div>
                 `);
-
                 markers.push({ marker, index });
             });
 
@@ -163,7 +129,6 @@
                     <a href="${mapsLink}" target="_blank">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
                 `;
 
-                // Add click event to zoom to marker
                 card.addEventListener('click', () => {
                     const markerObj = markers.find(m => m.index === originalIndex);
                     if (markerObj) {
