@@ -26,7 +26,6 @@
             <input type="text" id="searchInput" placeholder="Search events, artists, venues...">
         </div>
         <div class="nav-links">
-            <!-- EVENTS MEGA MENU -->
             <div class="nav-item">
                 Events <i class="fas fa-chevron-down"></i>
                 <div class="dropdown-menu">
@@ -37,7 +36,6 @@
                 </div>
             </div>
             
-            <!-- CATEGORIES MEGA MENU -->
             <div class="nav-item">
                 Categories <i class="fas fa-chevron-down"></i>
                 <div class="dropdown-menu">
@@ -81,16 +79,12 @@
     </main>
 
     <script>
-        // --- EVENT DATABASE ---
         const events = [
-            // Featured Events
             { id: 1, title: "Escape to Sun City for the day!", category: "featured", location: "Sun City Resort, Rustenburg", date: "Dec 01, 2025 - Dec 31, 2026", price: "Weekdays(R305-R415) - Weekend(R370-R470)", img: "https://images.unsplash.com/photo-1572331165267-854da2b10ccc?auto=format&fit=crop&q=80&w=600" },
             { id: 2, title: "Loftus Season Ticket 2026/27", category: "featured", location: "Loftus Versfeld Stadium, Pretoria", date: "Jul 24, 2026 - Apr 30, 2027", price: "R1350 - R2500", img: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&q=80&w=600" },
             { id: 3, title: "Bangladesh Cricket Tour", category: "featured", location: "Various Stadiums", date: "Nov 15, 2025 - Dec 07, 2026", price: "From R175", img: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=600" },
             { id: 4, title: "Winky D: Tete-A-Tete (Johannesburg)", category: "featured", location: "Ellis Park Arena, Johannesburg", date: "November 28, 2026 - 6:00 PM", price: "From R300", img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600" },
             { id: 5, title: "Sunbet Beach Party with Scorpion Kings", category: "featured", location: "Sun City Resort - Valley of the Waves", date: "December 04, 2026", price: "From R1000", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=600" },
-
-            // Music Events
             { id: 6, title: "Faithful With Bucie - The Concert (DBN)", category: "music", location: "Olive Convention Centre, Durban", date: "December 16, 2026 - 7:00 PM", price: "From R550", img: "https://images.unsplash.com/photo-1493225457124-a1a2a5f5b8b2?auto=format&fit=crop&q=80&w=600" },
             { id: 7, title: "Ikhaya Labasha", category: "music", location: "Maphephetheni Inanda Dam", date: "November 29, 2026 - 12:00 PM", price: "From R150", img: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=600" },
             { id: 8, title: "Nedbank Golf Challenge", category: "music", location: "Sun City Resort", date: "December 01, 2026", price: "From R250", img: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=600" },
@@ -98,7 +92,6 @@
             { id: 10, title: "Pulse Media Leadership Conference", category: "music", location: "The Galleria Events Venue", date: "May 2027", price: "From R1200", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600" }
         ];
 
-        // --- RENDER FUNCTION ---
         function renderGrid(eventsToRender) {
             const featuredGrid = document.getElementById('featuredGrid');
             const musicGrid = document.getElementById('musicGrid');
@@ -131,7 +124,6 @@
             });
         }
 
-        // --- SEARCH FUNCTIONALITY ---
         const searchInput = document.getElementById('searchInput');
         
         searchInput.addEventListener('input', (e) => {
@@ -146,7 +138,6 @@
             renderGrid(filteredEvents);
         });
 
-        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             renderGrid(events);
         });
