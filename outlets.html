@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlets | VibeTix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="logo"><a href="index.html">Vibe<span>Tix</span></a></div>
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search events, artists, venues...">
+        </div>
+        <div class="nav-links">
+            <div class="nav-item"><a href="index.html">Home</a></div>
+            <div class="nav-item"><a href="faq.html">FAQ</a></div>
+            <div class="nav-item"><a href="outlets.html">Outlets</a></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">Find a VibeTix Outlet</h1>
+        <p class="page-subtitle">Find a VibeTix outlet near you to purchase tickets in person.</p>
+
+        <div class="outlet-search-box">
+            <input type="text" placeholder="Search by outlet name, address or city...">
+            <select>
+                <option>All Provinces</option>
+                <option>Gauteng</option>
+                <option>Western Cape</option>
+                <option>KwaZulu-Natal</option>
+            </select>
+            <button style="padding: 12px 24px; background: var(--nav-blue); color: white; border: none; border-radius: 6px; cursor: pointer;"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="outlet-layout">
+            <div class="map-container">
+                <div class="map-overlay">Map View</div>
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000" alt="Map Placeholder">
+            </div>
+
+            <div class="outlet-list">
+                <div class="outlet-card">
+                    <h4>14 TUCK SHOP</h4>
+                    <span class="outlet-type">Retail Store</span>
+                    <p><i class="fas fa-map-marker-alt"></i> Unknown Address, SHOP, KwaZulu-Natal</p>
+                    <p><i class="fas fa-phone"></i> 0</p>
+                    <a href="#">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
+                </div>
+
+                <div class="outlet-card">
+                    <h4>1692268 KENSINGTON ELECTRICAL WH</h4>
+                    <span class="outlet-type">Retail Store</span>
+                    <p><i class="fas fa-map-marker-alt"></i> Unknown Address, WH, Gauteng</p>
+                    <p><i class="fas fa-phone"></i> 0116148556</p>
+                    <a href="#">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
+                </div>
+
+                <div class="outlet-card">
+                    <h4>2ND AVENUE SPAR Kiosk</h4>
+                    <span class="outlet-type">Retail Store</span>
+                    <p><i class="fas fa-map-marker-alt"></i> 2nd Avenue, Pretoria, Gauteng</p>
+                    <p><i class="fas fa-phone"></i> 0123456789</p>
+                    <a href="#">View on Google Maps <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
