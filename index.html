@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeTix | Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>VibeTix | Discover and book tickets</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- NAVIGATION -->
     <nav class="top-nav">
         <div class="logo"><a href="index.html">Vibe<span>Tix</span></a></div>
         <div class="search-container">
@@ -17,6 +25,7 @@
             <input type="text" placeholder="Search events, artists, venues...">
         </div>
         <div class="nav-links">
+            <!-- EVENTS MEGA MENU -->
             <div class="nav-item">
                 Events <i class="fas fa-chevron-down"></i>
                 <div class="dropdown-menu">
@@ -29,6 +38,7 @@
                 </div>
             </div>
             
+            <!-- CATEGORIES MEGA MENU -->
             <div class="nav-item">
                 Categories <i class="fas fa-chevron-down"></i>
                 <div class="dropdown-menu">
@@ -48,17 +58,86 @@
             
             <div class="nav-item"><a href="faq.html">FAQ</a></div>
             <div class="nav-item"><a href="outlets.html">Outlets</a></div>
+            <div class="nav-item"><a href="#"><i class="far fa-heart"></i></a></div>
         </div>
     </nav>
 
+    <!-- TOP BANNER -->
     <div style="background: var(--nav-blue); color: white; text-align: center; padding: 12px; font-size: 0.9rem;">
         VibeTix is South Africa's top destination for ticket buyers and sellers.
     </div>
 
-    <div class="container">
-        <h1>Welcome to VibeTix</h1>
-        <p class="page-subtitle">Hover over "Events" or "Categories" in the top menu to see the mega dropdowns.</p>
+    <!-- FEATURED EVENTS SECTION -->
+    <div class="section-header" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 1.5rem; font-weight: 800;">Featured Events</h2>
+        <a href="#" style="color: var(--brand-color); font-weight: 600; font-size: 0.9rem;">View All</a>
     </div>
 
+    <main class="event-grid" id="featuredGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 0 5% 40px;">
+        <!-- Events injected via JS -->
+    </main>
+
+    <!-- MUSIC EVENTS SECTION -->
+    <div class="section-header" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 1.5rem; font-weight: 800;">Music Events</h2>
+        <a href="#" style="color: var(--brand-color); font-weight: 600; font-size: 0.9rem;">View All</a>
+    </div>
+
+    <main class="event-grid" id="musicGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 0 5% 60px;">
+        <!-- Events injected via JS -->
+    </main>
+
+    <script>
+        // --- EVENT DATABASE ---
+        const events = [
+            // Featured Events
+            { id: 1, title: "Escape to Sun City for the day!", category: "featured", location: "Sun City Resort, Rustenburg", date: "Dec 01, 2025 - Dec 31, 2026", price: "Weekdays(R305-R415) - Weekend(R370-R470)", img: "https://images.unsplash.com/photo-1572331165267-854da2b10ccc?auto=format&fit=crop&q=80&w=600" },
+            { id: 2, title: "Loftus Season Ticket 2026/27", category: "featured", location: "Loftus Versfeld Stadium, Pretoria", date: "Jul 24, 2026 - Apr 30, 2027", price: "R1350 - R2500", img: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&q=80&w=600" },
+            { id: 3, title: "Bangladesh Cricket Tour", category: "featured", location: "Various Stadiums", date: "Nov 15, 2025 - Dec 07, 2026", price: "From R175", img: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=600" },
+            { id: 4, title: "Winky D: Tete-A-Tete (Johannesburg)", category: "featured", location: "Ellis Park Arena, Johannesburg", date: "November 28, 2026 - 6:00 PM", price: "From R300", img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600" },
+            { id: 5, title: "Sunbet Beach Party with Scorpion Kings", category: "featured", location: "Sun City Resort - Valley of the Waves", date: "December 04, 2026", price: "From R1000", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=600" },
+
+            // Music Events
+            { id: 6, title: "Faithful With Bucie - The Concert (DBN)", category: "music", location: "Olive Convention Centre, Durban", date: "December 16, 2026 - 7:00 PM", price: "From R550", img: "https://images.unsplash.com/photo-1493225457124-a1a2a5f5b8b2?auto=format&fit=crop&q=80&w=600" },
+            { id: 7, title: "Ikhaya Labasha", category: "music", location: "Maphephetheni Inanda Dam", date: "November 29, 2026 - 12:00 PM", price: "From R150", img: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=600" },
+            { id: 8, title: "Nedbank Golf Challenge", category: "music", location: "Sun City Resort", date: "December 01, 2026", price: "From R250", img: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=600" },
+            { id: 9, title: "Freestyle Kings Live", category: "music", location: "Cape Town, Johannesburg", date: "March 2027", price: "From R450", img: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=600" },
+            { id: 10, title: "Pulse Media Leadership Conference", category: "music", location: "The Galleria Events Venue", date: "May 2027", price: "From R1200", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600" }
+        ];
+
+        // --- RENDER FUNCTION ---
+        function renderGrid(category, containerId) {
+            const grid = document.getElementById(containerId);
+            grid.innerHTML = '';
+
+            const filtered = events.filter(e => e.category === category);
+
+            filtered.forEach(event => {
+                const card = document.createElement('div');
+                // Styling is inline here to ensure it works with the new style.css
+                card.style.cssText = "background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; transition: transform 0.3s; cursor: pointer; display: flex; flex-direction: column;";
+                card.innerHTML = `
+                    <div style="position: relative; height: 180px;">
+                        <img src="${event.img}" alt="${event.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span style="position: absolute; top: 10px; left: 10px; background: #1e3a8a; color: white; padding: 4px 10px; font-size: 0.7rem; font-weight: 700; border-radius: 4px; text-transform: uppercase;">Featured</span>
+                        <div style="position: absolute; top: 10px; right: 10px; background: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748b; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'"><i class="far fa-heart"></i></div>
+                    </div>
+                    <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3;">${event.title}</div>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="far fa-calendar"></i> ${event.date}</div>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-map-marker-alt"></i> ${event.location}</div>
+                        <div style="margin-top: auto; padding-top: 15px; font-weight: 700; color: #1e3a8a; font-size: 1rem;">${event.price}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGrid('featured', 'featuredGrid');
+            renderGrid('music', 'musicGrid');
+        });
+    </script>
 </body>
 </html>
