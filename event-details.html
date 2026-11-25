@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details | VibeTix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .details-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .hero-image { width: 100%; height: 400px; object-fit: cover; border-radius: 12px; margin-bottom: 30px; }
+        .details-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+        .details-meta { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px; display: flex; gap: 20px; align-items: center; }
+        .details-price { font-size: 1.5rem; font-weight: 700; color: var(--nav-blue); margin-bottom: 30px; }
+        .details-body { background: white; padding: 30px; border-radius: 12px; border: 1px solid var(--border); line-height: 1.8; color: var(--text-dark); }
+        .details-body h3 { margin-top: 30px; margin-bottom: 10px; font-size: 1.3rem; }
+        .details-body ul { padding-left: 20px; margin-bottom: 20px; }
+        .details-body li { margin-bottom: 8px; }
+        .btn-book { display: inline-block; background: var(--brand-color); color: white; padding: 15px 40px; font-size: 1.2rem; font-weight: 700; border-radius: 8px; text-decoration: none; margin-top: 30px; transition: 0.3s; border: none; cursor: pointer; }
+        .btn-book:hover { background: #be123c; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="logo"><a href="index.html">Vibe<span>Tix</span></a></div>
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search events, artists, venues...">
+        </div>
+        <div class="nav-links">
+            <div class="nav-item"><a href="index.html">Home</a></div>
+            <div class="nav-item"><a href="faq.html">FAQ</a></div>
+            <div class="nav-item"><a href="outlets.html">Outlets</a></div>
+        </div>
+    </nav>
+
+    <div class="details-container" id="eventContainer">
+        <!-- Content will be injected via JS -->
+    </div>
+
+    <script>
+        // We duplicate the events array here so this page can find the data
+        const events = [
+            { id: 1, title: "Escape to Sun City for the day!", category: "featured", location: "Sun City Resort, Rustenburg", date: "Dec 01, 2025 - Dec 31, 2026", price: "Weekdays(R305-R415) - Weekend(R370-R470)", img: "https://images.unsplash.com/photo-1572331165267-854da2b10ccc?auto=format&fit=crop&q=80&w=600" },
+            { id: 2, title: "Loftus Season Ticket 2026/27", category: "featured", location: "Loftus Versfeld Stadium, Pretoria", date: "Jul 24, 2026 - Apr 30, 2027", price: "R1350 - R2500", img: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&q=80&w=600" },
+            { id: 3, title: "Bangladesh Cricket Tour", category: "featured", location: "Various Stadiums", date: "Nov 15, 2025 - Dec 07, 2026", price: "From R175", img: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=600" },
+            { id: 4, title: "Winky D: Tete-A-Tete (Johannesburg)", category: "featured", location: "Ellis Park Arena, Johannesburg", date: "November 28, 2026 - 6:00 PM", price: "From R300", img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600" },
+            { id: 5, title: "Sunbet Beach Party with Scorpion Kings", category: "featured", location: "Sun City Resort - Valley of the Waves", date: "December 04, 2026", price: "From R1000", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=600" },
+            { id: 6, title: "Faithful With Bucie - The Concert (DBN)", category: "music", location: "Olive Convention Centre, Durban", date: "December 16, 2026 - 7:00 PM", price: "From R550", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600" },
+            { id: 7, title: "Ikhaya Labasha", category: "music", location: "Maphephetheni Inanda Dam", date: "November 29, 2026 - 12:00 PM", price: "From R150", img: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=600" },
+            { id: 8, title: "Nedbank Golf Challenge", category: "music", location: "Sun City Resort", date: "December 01, 2026", price: "From R250", img: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=600" },
+            { id: 9, title: "Freestyle Kings Live", category: "music", location: "Cape Town, Johannesburg", date: "March 2027", price: "From R450", img: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=600" },
+            { id: 10, title: "Pulse Media Leadership Conference", category: "music", location: "The Galleria Events Venue", date: "May 2027", price: "From R1200", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600" }
+        ];
+
+        // --- LOAD EVENT DETAILS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get the ID from the URL (e.g., event-details.html?id=1)
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = parseInt(urlParams.get('id'));
+
+            // Find the event in the array
+            const event = events.find(e => e.id === eventId);
+
+            const container = document.getElementById('eventContainer');
+
+            if (!event) {
+                container.innerHTML = `<h1 style="text-align:center; margin-top:50px;">Event not found. <a href="index.html">Go back home</a></h1>`;
+                return;
+            }
+
+            // Generate custom HTML based on the event title
+            let customBody = "";
+
+            if (event.title.includes("Sun City")) {
+                // The specific content you provided for Sun City
+                customBody = `
+                    <p><strong>Your day of fun, sun and adventure awaits!</strong></p>
+                    <p>Escape to Sun City and enjoy a full day of excitement, including access to the iconic Valley of Waves. Whether you're planning a family day out, a weekend escape or simply looking for some fun in the sun, your Sun City adventure starts here.</p>
+                    <p>Limited tickets are available daily — book online in advance to avoid disappointment.</p>
+                    
+                    <h3>🎟️ Day Visitor Ticket Prices</h3>
+                    <ul>
+                        <li><strong>Weekdays (Mon - Fri):</strong> Kids (3–12): R305 | Adults: R415</li>
+                        <li><strong>Weekends (Sat - Sun):</strong> Kids (3–12): R370 | Adults: R470</li>
+                    </ul>
+                    
+                    <h3>🌊 What's Included?</h3>
+                    <ul>
+                        <li>Entry to the Sun City Resort</li>
+                        <li>Entry to the Valley of Waves water park</li>
+                        <li>An R80 resort voucher (redeemable at participating establishments)</li>
+                    </ul>
+                    
+                    <h3>🌴 Upgrade Your Experience</h3>
+                    <p><strong>Private Pergola Package – R5,500:</strong> Includes private use of a reserved pergola for the day, 6 Day Visitor tickets, Valley of Waves access, complimentary towels, and dedicated butler service. (Only 5 available per day).</p>
+                    
+                    <h3>🏝️ Private Island Access – R500 per person</h3>
+                    <p>Enjoy your own exclusive island space at the Valley of Waves. Includes complimentary towels and a dedicated butler. <em>Note: You must purchase a Valley of Waves GA ticket first to unlock this option.</em></p>
+                `;
+            } else {
+                // Generic content for other events
+                customBody = `
+                    <p>Join us for an unforgettable experience at <strong>${event.title}</strong>.</p>
+                    <p>This event will be held at the prestigious <strong>${event.location}</strong>. Please arrive early to ensure a smooth entry.</p>
+                    <h3>Event Information</h3>
+                    <ul>
+                        <li><strong>Date:</strong> ${event.date}</li>
+                        <li><strong>Venue:</strong> ${event.location}</li>
+                        <li><strong>Ticket Price:</strong> ${event.price}</li>
+                    </ul>
+                    <p>All tickets are subject to availability. Refunds and exchanges are only permitted under the specific terms and conditions of the event organizer.</p>
+                `;
+            }
+
+            // Render the page
+            container.innerHTML = `
+                <img src="${event.img}" alt="${event.title}" class="hero-image">
+                <h1 class="details-title">${event.title}</h1>
+                <div class="details-meta">
+                    <span><i class="far fa-calendar"></i> ${event.date}</span>
+                    <span><i class="fas fa-map-marker-alt"></i> ${event.location}</span>
+                </div>
+                <div class="details-price">${event.price}</div>
+                
+                <div class="details-body">
+                    ${customBody}
+                    <button class="btn-book" onclick="alert('Booking functionality coming soon!')">Book Tickets Now</button>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
