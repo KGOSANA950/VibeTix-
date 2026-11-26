@@ -3,133 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Details | VibeTix</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <title>VibeTix | Discover and book tickets</title>
     
-    <style>
-        /* --- DETAILS PAGE STYLES --- */
-        .details-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
-        
-        .hero-image { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 30px; }
-        .details-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
-        .details-meta { color: var(--text-muted); font-size: 1rem; margin-bottom: 20px; display: flex; gap: 20px; align-items: center; }
-        .details-price { font-size: 1.5rem; font-weight: 700; color: var(--nav-blue); margin-bottom: 30px; }
-        
-        /* --- TICKET SELECTOR --- */
-        .ticket-section { margin-bottom: 30px; }
-        .ticket-category-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); }
-        
-        .ticket-card {
-            display: flex; justify-content: space-between; align-items: center;
-            background: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border);
-            margin-bottom: 15px; transition: border-color 0.2s;
-        }
-        .ticket-card:hover { border-color: var(--brand-color); }
-        
-        .ticket-info h4 { font-size: 1.1rem; margin-bottom: 5px; }
-        .ticket-info p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; }
-        .ticket-info .ticket-price { font-weight: 700; color: var(--nav-blue); }
-        
-        .quantity-selector { display: flex; align-items: center; gap: 15px; }
-        .qty-btn {
-            width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border);
-            background: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 1rem; color: var(--text-dark); transition: 0.2s;
-        }
-        .qty-btn:hover { background: var(--nav-blue); color: white; border-color: var(--nav-blue); }
-        .qty-display { font-weight: 700; font-size: 1.1rem; width: 20px; text-align: center; }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        /* --- SHOPPING CART (RIGHT SIDE) --- */
-        .shopping-cart {
-            background: white; padding: 30px; border-radius: 12px; border: 1px solid var(--border);
-            height: fit-content; position: sticky; top: 20px;
-        }
-        .cart-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-        
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; }
-        .cart-item-name { color: var(--text-muted); }
-        
-        .cart-totals { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; }
-        .cart-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 600; }
-        .cart-total { font-size: 1.3rem; font-weight: 800; color: var(--nav-blue); }
-        
-        .promo-code { display: flex; gap: 10px; margin-top: 20px; }
-        .promo-code input { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 6px; outline: none; }
-        .promo-code button { padding: 10px 15px; background: var(--text-dark); color: white; border: none; border-radius: 6px; cursor: pointer; }
-
-        .btn-checkout {
-            width: 100%; padding: 15px; background: var(--brand-color); color: white;
-            font-size: 1.1rem; font-weight: 700; border: none; border-radius: 8px;
-            margin-top: 30px; cursor: pointer; transition: 0.3s;
-        }
-        .btn-checkout:hover { background: #be123c; transform: translateY(-2px); }
-
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 900px) {
-            .details-container { grid-template-columns: 1fr; }
-            .hero-image { height: 200px; }
-            .details-title { font-size: 1.8rem; }
-        }
-    </style>
+    <!-- Link to your shared CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- NAVIGATION -->
     <nav class="top-nav">
         <div class="logo"><a href="index.html">Vibe<span>Tix</span></a></div>
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search events, artists, venues...">
+            <input type="text" id="searchInput" placeholder="Search events, artists, venues...">
         </div>
         <div class="nav-links">
-            <div class="nav-item"><a href="index.html">Home</a></div>
+            <!-- EVENTS MEGA MENU -->
+            <div class="nav-item">
+                Events <i class="fas fa-chevron-down"></i>
+                <div class="dropdown-menu">
+                    <div class="dropdown-header">Browse Events</div>
+                    <a href="#featured-events">All Events</a>
+                    <a href="#featured-events">Featured Events</a>
+                    <a href="#music-events">Music Events</a>
+                </div>
+            </div>
+            
+            <!-- CATEGORIES MEGA MENU -->
+            <div class="nav-item">
+                Categories <i class="fas fa-chevron-down"></i>
+                <div class="dropdown-menu">
+                    <div class="dropdown-header">Event Categories</div>
+                    <a href="#featured-events">Music</a>
+                    <a href="#featured-events">Lifestyle</a>
+                    <a href="#featured-events">Sport</a>
+                    <a href="#featured-events">Comedy</a>
+                </div>
+            </div>
+            
             <div class="nav-item"><a href="faq.html">FAQ</a></div>
+            
+            <!-- ADDED BUS LINK HERE -->
+            <div class="nav-item"><a href="#">Bus <i class="fas fa-external-link-alt" style="font-size: 0.7rem;"></i></a></div>
+            
             <div class="nav-item"><a href="outlets.html">Outlets</a></div>
+            <div class="nav-item"><a href="#"><i class="far fa-heart"></i></a></div>
         </div>
     </nav>
 
-    <div class="details-container">
-        <!-- LEFT SIDE: TICKET SELECTION -->
-        <div id="ticketSelectionArea">
-            <!-- Content injected via JS -->
-        </div>
-
-        <!-- RIGHT SIDE: SHOPPING CART -->
-        <div class="shopping-cart">
-            <h3 class="cart-title">Shopping Cart</h3>
-            <div id="cartItems">
-                <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center;">Your cart is empty. Please select tickets.</p>
-            </div>
-            
-            <div class="cart-totals">
-                <div class="cart-row">
-                    <span>Fees</span>
-                    <span>R 0.00</span>
-                </div>
-                <div class="cart-row cart-total">
-                    <span>Total</span>
-                    <span id="cartTotal">R 0.00</span>
-                </div>
-            </div>
-
-            <div class="promo-code">
-                <input type="text" placeholder="Add promo code / voucher">
-                <button>Apply</button>
-            </div>
-
-            <button class="btn-checkout" onclick="alert('Proceeding to secure payment gateway...')">Checkout</button>
-        </div>
+    <!-- TOP BANNER -->
+    <div style="background: var(--nav-blue); color: white; text-align: center; padding: 12px; font-size: 0.9rem;">
+        VibeTix is South Africa's top destination for ticket buyers and sellers.
     </div>
 
+    <!-- FEATURED EVENTS SECTION -->
+    <div class="section-header" id="featured-events" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 1.5rem; font-weight: 800;">Featured Events</h2>
+        <a href="#" style="color: var(--brand-color); font-weight: 600; font-size: 0.9rem;">View All</a>
+    </div>
+
+    <main class="event-grid" id="featuredGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 0 5% 40px;">
+        <!-- Events injected via JS -->
+    </main>
+
+    <!-- MUSIC EVENTS SECTION -->
+    <div class="section-header" id="music-events" style="padding: 30px 5% 15px; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 1.5rem; font-weight: 800;">Music Events</h2>
+        <a href="#" style="color: var(--brand-color); font-weight: 600; font-size: 0.9rem;">View All</a>
+    </div>
+
+    <main class="event-grid" id="musicGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 0 5% 60px;">
+        <!-- Events injected via JS -->
+    </main>
+
     <script>
-        // --- EVENT DATABASE (Same as index.html) ---
+        // --- EVENT DATABASE ---
         const events = [
+            // Featured Events
             { id: 1, title: "Escape to Sun City for the day!", category: "featured", location: "Sun City Resort, Rustenburg", date: "Dec 01, 2025 - Dec 31, 2026", price: "Weekdays(R305-R415) - Weekend(R370-R470)", img: "https://images.unsplash.com/photo-1572331165267-854da2b10ccc?auto=format&fit=crop&q=80&w=600" },
             { id: 2, title: "Loftus Season Ticket 2026/27", category: "featured", location: "Loftus Versfeld Stadium, Pretoria", date: "Jul 24, 2026 - Apr 30, 2027", price: "R1350 - R2500", img: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&q=80&w=600" },
             { id: 3, title: "Bangladesh Cricket Tour", category: "featured", location: "Various Stadiums", date: "Nov 15, 2025 - Dec 07, 2026", price: "From R175", img: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=600" },
             { id: 4, title: "Winky D: Tete-A-Tete (Johannesburg)", category: "featured", location: "Ellis Park Arena, Johannesburg", date: "November 28, 2026 - 6:00 PM", price: "From R300", img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600" },
             { id: 5, title: "Sunbet Beach Party with Scorpion Kings", category: "featured", location: "Sun City Resort - Valley of the Waves", date: "December 04, 2026", price: "From R1000", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=600" },
+
+            // Music Events
             { id: 6, title: "Faithful With Bucie - The Concert (DBN)", category: "music", location: "Olive Convention Centre, Durban", date: "December 16, 2026 - 7:00 PM", price: "From R550", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600" },
             { id: 7, title: "Ikhaya Labasha", category: "music", location: "Maphephetheni Inanda Dam", date: "November 29, 2026 - 12:00 PM", price: "From R150", img: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=600" },
             { id: 8, title: "Nedbank Golf Challenge", category: "music", location: "Sun City Resort", date: "December 01, 2026", price: "From R250", img: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=600" },
@@ -137,155 +102,63 @@
             { id: 10, title: "Pulse Media Leadership Conference", category: "music", location: "The Galleria Events Venue", date: "May 2027", price: "From R1200", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600" }
         ];
 
-        // --- CART STATE ---
-        let cart = {};
+        // --- RENDER FUNCTION ---
+        function renderGrid(eventsToRender) {
+            const featuredGrid = document.getElementById('featuredGrid');
+            const musicGrid = document.getElementById('musicGrid');
+            
+            featuredGrid.innerHTML = '';
+            musicGrid.innerHTML = '';
 
-        // --- LOAD EVENT ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const eventId = parseInt(urlParams.get('id'));
-            const event = events.find(e => e.id === eventId);
-            const container = document.getElementById('ticketSelectionArea');
+            eventsToRender.forEach(event => {
+                const card = document.createElement('div');
+                card.style.cssText = "background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; transition: transform 0.3s; cursor: pointer; display: flex; flex-direction: column;";
+                
+                card.onclick = () => {
+                    window.location.href = `event-details.html?id=${event.id}`;
+                };
 
-            if (!event) {
-                container.innerHTML = `<h1>Event not found. <a href="index.html">Go back</a></h1>`;
-                return;
-            }
-
-            // CUSTOM TICKET TIERS FOR SUN CITY
-            let ticketHTML = "";
-            if (event.title.includes("Sun City")) {
-                ticketHTML = `
-                    <img src="${event.img}" alt="${event.title}" class="hero-image">
-                    <h1 class="details-title">${event.title}</h1>
-                    <div class="details-meta">
-                        <span><i class="far fa-calendar"></i> ${event.date}</span>
-                        <span><i class="fas fa-map-marker-alt"></i> ${event.location}</span>
+                card.innerHTML = `
+                    <div style="position: relative; height: 180px;">
+                        <img src="${event.img}" alt="${event.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span style="position: absolute; top: 10px; left: 10px; background: #1e3a8a; color: white; padding: 4px 10px; font-size: 0.7rem; font-weight: 700; border-radius: 4px; text-transform: uppercase;">Featured</span>
+                        <div style="position: absolute; top: 10px; right: 10px; background: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748b; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'"><i class="far fa-heart"></i></div>
                     </div>
-
-                    <div class="ticket-section">
-                        <h3 class="ticket-category-title">Weekend/Public Holidays</h3>
-                        <div class="ticket-card">
-                            <div class="ticket-info">
-                                <h4>Adult 13+</h4>
-                                <p>Access to Valley of Waves</p>
-                                <div class="ticket-price">ZAR 470.00</div>
-                            </div>
-                            <div class="quantity-selector">
-                                <button class="qty-btn" onclick="updateQty('adult', -1, 470)">-</button>
-                                <span class="qty-display" id="qty-adult">0</span>
-                                <button class="qty-btn" onclick="updateQty('adult', 1, 470)">+</button>
-                            </div>
-                        </div>
-
-                        <div class="ticket-card">
-                            <div class="ticket-info">
-                                <h4>Kids 3-12 yrs</h4>
-                                <p>Access to Valley of Waves</p>
-                                <div class="ticket-price">ZAR 370.00</div>
-                            </div>
-                            <div class="quantity-selector">
-                                <button class="qty-btn" onclick="updateQty('kid', -1, 370)">-</button>
-                                <span class="qty-display" id="qty-kid">0</span>
-                                <button class="qty-btn" onclick="updateQty('kid', 1, 370)">+</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ticket-section">
-                        <h3 class="ticket-category-title">Private Island Access</h3>
-                        <div class="ticket-card">
-                            <div class="ticket-info">
-                                <h4>Island Access</h4>
-                                <p>Exclusive island space, complimentary towels, butler.</p>
-                                <div class="ticket-price">ZAR 500.00</div>
-                            </div>
-                            <div class="quantity-selector">
-                                <button class="qty-btn" onclick="updateQty('island', -1, 500)">-</button>
-                                <span class="qty-display" id="qty-island">0</span>
-                                <button class="qty-btn" onclick="updateQty('island', 1, 500)">+</button>
-                            </div>
-                        </div>
+                    <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3;">${event.title}</div>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="far fa-calendar"></i> ${event.date}</div>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-map-marker-alt"></i> ${event.location}</div>
+                        <div style="margin-top: auto; padding-top: 15px; font-weight: 700; color: #1e3a8a; font-size: 1rem;">${event.price}</div>
                     </div>
                 `;
-            } else {
-                // Generic ticket for other events
-                ticketHTML = `
-                    <img src="${event.img}" alt="${event.title}" class="hero-image">
-                    <h1 class="details-title">${event.title}</h1>
-                    <div class="details-meta">
-                        <span><i class="far fa-calendar"></i> ${event.date}</span>
-                        <span><i class="fas fa-map-marker-alt"></i> ${event.location}</span>
-                    </div>
-                    
-                    <div class="ticket-section">
-                        <h3 class="ticket-category-title">General Admission</h3>
-                        <div class="ticket-card">
-                            <div class="ticket-info">
-                                <h4>Standard Ticket</h4>
-                                <p>Full access to the event.</p>
-                                <div class="ticket-price">${event.price}</div>
-                            </div>
-                            <div class="quantity-selector">
-                                <button class="qty-btn" onclick="updateQty('standard', -1, 500)">-</button>
-                                <span class="qty-display" id="qty-standard">0</span>
-                                <button class="qty-btn" onclick="updateQty('standard', 1, 500)">+</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
+                
+                if (event.category === 'featured') {
+                    featuredGrid.appendChild(card);
+                } else {
+                    musicGrid.appendChild(card);
+                }
+            });
+        }
 
-            container.innerHTML = ticketHTML;
+        // --- SEARCH FUNCTIONALITY ---
+        const searchInput = document.getElementById('searchInput');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            const filteredEvents = events.filter(event => 
+                event.title.toLowerCase().includes(searchTerm) || 
+                event.location.toLowerCase().includes(searchTerm) ||
+                event.category.toLowerCase().includes(searchTerm)
+            );
+            
+            renderGrid(filteredEvents);
         });
 
-        // --- UPDATE CART LOGIC ---
-        function updateQty(type, change, price) {
-            const qtyEl = document.getElementById(`qty-${type}`);
-            let currentQty = parseInt(qtyEl.textContent);
-            let newQty = currentQty + change;
-
-            if (newQty >= 0) {
-                qtyEl.textContent = newQty;
-                
-                if (newQty === 0) {
-                    delete cart[type];
-                } else {
-                    cart[type] = { qty: newQty, price: price, name: type.charAt(0).toUpperCase() + type.slice(1) };
-                }
-                renderCart();
-            }
-        }
-
-        // --- RENDER CART ---
-        function renderCart() {
-            const cartItemsContainer = document.getElementById('cartItems');
-            const cartTotalEl = document.getElementById('cartTotal');
-            
-            let total = 0;
-            let html = "";
-
-            for (const key in cart) {
-                const item = cart[key];
-                const itemTotal = item.qty * item.price;
-                total += itemTotal;
-                html += `
-                    <div class="cart-item">
-                        <span class="cart-item-name">${item.qty}x ${item.name}</span>
-                        <span>R ${itemTotal.toFixed(2)}</span>
-                    </div>
-                `;
-            }
-
-            if (html === "") {
-                cartItemsContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem; text-align: center;">Your cart is empty. Please select tickets.</p>`;
-            } else {
-                cartItemsContainer.innerHTML = html;
-            }
-
-            // Update Total
-            cartTotalEl.textContent = `R ${total.toFixed(2)}`;
-        }
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGrid(events);
+        });
     </script>
 </body>
 </html>
