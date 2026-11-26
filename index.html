@@ -50,6 +50,10 @@
             </div>
             
             <div class="nav-item"><a href="faq.html">FAQ</a></div>
+            
+            <!-- ADDED BUS LINK HERE -->
+            <div class="nav-item"><a href="#">Bus <i class="fas fa-external-link-alt" style="font-size: 0.7rem;"></i></a></div>
+            
             <div class="nav-item"><a href="outlets.html">Outlets</a></div>
             <div class="nav-item"><a href="#"><i class="far fa-heart"></i></a></div>
         </div>
@@ -110,7 +114,6 @@
                 const card = document.createElement('div');
                 card.style.cssText = "background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; transition: transform 0.3s; cursor: pointer; display: flex; flex-direction: column;";
                 
-                // THIS LINE MAKES THE CARD CLICKABLE
                 card.onclick = () => {
                     window.location.href = `event-details.html?id=${event.id}`;
                 };
